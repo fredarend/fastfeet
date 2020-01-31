@@ -1,23 +1,15 @@
 import { Router } from 'express';
-// import User from './app/models/User';
-import Recipient from './app/models/Recipient';
+import SessionController from './app/controllers/SessionController';
+import RecipientController from './app/controllers/RecipientController';
+import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
 
-routes.get('/', async (req, res) => {
-  const recipient = await Recipient.create({
-    name: 'Cleide Léa Weber',
-    street: 'Rua Luis Sfredo',
-    number: '58-d',
-    complement: 'Apartamento',
-    state: 'SC',
-    city: 'Seara',
-    zipcode: '89770000'
-  });
+routes.post('/sessions', SessionController.store);
 
-  res.json(recipient);
-});
+routes.use(authMiddleware);
 
-// routes.post('/users', UserController.store);
+routes.post('/recipients', RecipientController.store);
+routes.put('/recipients/:id', RecipientController.update);
 
 export default routes;
