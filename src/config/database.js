@@ -2,7 +2,7 @@ module.exports = {
   dialect: 'postgres',
   host: 'localhost',
   username: 'postgres',
-  password: 'postgres1010',
+  password: 'ps7007',
   database: 'fastfeet',
   define: {
     timestamps: true,
