@@ -12,14 +12,14 @@ module.exports = {
         references: { model: 'recipients', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
-        allowNull: true
+        allowNull: false
       },
       deliveryman_id: {
         type: Sequelize.INTEGER,
         references: { model: 'deliverymen', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
-        allowNull: true
+        allowNull: false
       },
       signature_id: {
         type: Sequelize.INTEGER,
@@ -53,6 +53,6 @@ module.exports = {
   },
 
   down: queryInterface => {
-    return queryInterface.dropTable('appointments');
+    return queryInterface.dropTable('deliveries');
   }
 };
