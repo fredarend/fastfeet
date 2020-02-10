@@ -3,6 +3,9 @@ import Delivery from '../models/Delivery';
 import Recipient from '../models/Recipient';
 import DeliveryMan from '../models/DeliveryMan';
 
+import Queue from '../../lib/Queue';
+import CreateMail from '../jobs/CreateMail';
+
 class DeliveryController {
   async store(req, res) {
     const schema = Yup.object().shape({
@@ -17,7 +20,8 @@ class DeliveryController {
 
     // delivery man exists?
     const deliveryManExists = await DeliveryMan.findOne({
-      where: { id: req.body.deliveryman_id }
+      where: { id: req.body.deliveryman_id },
+      attributes: ['name', 'email']
     });
 
     if (!deliveryManExists) {
@@ -26,7 +30,8 @@ class DeliveryController {
 
     // recipient exists?
     const recipientExists = await Recipient.findOne({
-      where: { id: req.body.recipient_id }
+      where: { id: req.body.recipient_id },
+      attributes: ['name', 'street', 'number', 'city', 'state', 'zipcode']
     });
 
     if (!recipientExists) {
@@ -36,6 +41,12 @@ class DeliveryController {
     const { id, recipient_id, deliveryman_id, product } = await Delivery.create(
       req.body
     );
+
+    await Queue.add(CreateMail.key, {
+      product,
+      recipient: recipientExists,
+      deliveryMan: deliveryManExists
+    });
 
     return res.json({ id, recipient_id, deliveryman_id, product });
   }
