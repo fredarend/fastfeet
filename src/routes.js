@@ -18,6 +18,10 @@ routes.post('/sessions', SessionController.store);
 
 // Withdraw and View Deliveries
 routes.get('/deliveryman/:id', WithdrawDeliveryController.index);
+routes.put(
+  '/deliveryman/:deliveryMan_id/delivery/:delivery_id',
+  WithdrawDeliveryController.update
+);
 
 routes.use(authMiddleware);
 
