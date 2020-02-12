@@ -11,7 +11,8 @@ class File extends Model {
           get() {
             return `http://localhost:3333/files/${this.path}`;
           }
-        }
+        },
+        signature: Sequelize.BOOLEAN
       },
       {
         sequelize

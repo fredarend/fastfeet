@@ -1,4 +1,4 @@
-import { isBefore, isAfter, startOfHour, setHours, parseISO } from 'date-fns';
+import { isBefore, isAfter, startOfHour, setHours } from 'date-fns';
 import { Op } from 'sequelize';
 
 import Delivery from '../models/Delivery';
@@ -80,13 +80,12 @@ class WithdrawDeliveryController {
         .json({ error: 'Delivery does not belong to the delivery man' });
     }
 
-    const { start_date } = req.body;
-    const date = parseISO(start_date);
+    const start_date = new Date();
 
-    const hourInit = setHours(startOfHour(date), 8);
-    const hourFinish = setHours(startOfHour(date), 18);
+    const hourInit = setHours(startOfHour(start_date), 8);
+    const hourFinish = setHours(startOfHour(start_date), 18);
 
-    if (isBefore(date, hourInit) || isAfter(date, hourFinish)) {
+    if (isBefore(start_date, hourInit) || isAfter(start_date, hourFinish)) {
       return res.status(400).json({
         error: 'Delivery withdrawals must be made between 8am and 18pm'
       });
@@ -105,7 +104,7 @@ class WithdrawDeliveryController {
         .json({ error: 'The withdrawal limit is 5 per day.' });
     }
 
-    delivery.start_date = date;
+    delivery.start_date = start_date;
 
     await delivery.save();
 
