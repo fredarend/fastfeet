@@ -1,7 +1,6 @@
 <h1 align="center"><a id="user-content---" class="anchor" aria-hidden="true" href="#--"><img alt="FastFeet" title="FastFeet" src="https://raw.githubusercontent.com/Rocketseat/bootcamp-gostack-desafio-03/master/.github/logo.png" />
 </h1>
 
-<h1 align="center">Welcome to FastFeet 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
   <a href="#" target="_blank">
@@ -20,7 +19,11 @@ yarn install
 ## Usage
 
 ```sh
-yarn dev and yarn queue
+yarn dev
+```
+
+```sh
+yarn queue
 ```
 
 ## Author
