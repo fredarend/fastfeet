@@ -1,5 +1,6 @@
 import Bee from 'bee-queue';
 import CreateMail from '../app/jobs/CreateMail';
+import CancellationMail from '../app/jobs/CancellationMail';
 import redisConfig from '../config/redis';
 
 /* Entendendo o código:
@@ -8,7 +9,7 @@ import redisConfig from '../config/redis';
   handle (processa as filas), processQueue processa as filas em tempo real.
 */
 
-const jobs = [CreateMail];
+const jobs = [CreateMail, CancellationMail];
 
 class Queue {
   constructor() {
@@ -35,7 +36,6 @@ class Queue {
   processQueue() {
     jobs.forEach(job => {
       const { bee, handle } = this.queues[job.key];
-
       bee.on('failed', this.handleFaillure).process(handle);
     });
   }
